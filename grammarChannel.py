@@ -131,6 +131,6 @@ def GrammerChannel(listwords):
 
 def SelectorVaraintHandler(input):
     variant = {
-        ['camel','Kamel'] : "hello",
+        ['camel','kamel'] : "Camel",
     }
     return input # ! change later to non-default function after code defenittion
