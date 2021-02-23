@@ -11,7 +11,7 @@ try:
     # to use another API key, use `r.recognize_google(audio, key="GOOGLE_SPEECH_RECOGNITION_API_KEY")`
     # instead of `r.recognize_google(audio)`
 
-    print(GrammerChannel(r.recognize_google(audio).lower().split()))
+    print(r.recognize_google(audio).lower())
 except sr.UnknownValueError:
     print("""
          _           _          _            _    _        _    
