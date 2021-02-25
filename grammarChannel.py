@@ -57,7 +57,7 @@ def tap(key, times=1):
     for i in range(times):
         keyboard.press(key)
         keyboard.release(key)
-    return ""
+    return ''
 
 # --------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -69,19 +69,19 @@ def KeyCombos(keys):
         press(key)
     for key in keys[::-1]:
         release(key)
-    return ""
+    return ''
 
 
 def Select(keys):
     command = keys[1]
-    if command == "line":
+    if command == 'line':
         tap(Key.home)
         press(Key.shift)
         tap(Key.end)
         release(Key.shift)
-    elif command == "all":
+    elif command == 'all':
         KeyCombos(['', 'control', 'a'])
-    return ""
+    return ''
 
 
 def Kabab(keys):
@@ -105,9 +105,47 @@ def Plaintext(listwords):
 
 def ProgrammingKeywords():
     keywordList = {
-
+        'and' : 'and',
+        'as':'as',
+        'assert':'assert',
+        'break':'break',
+        'class' : 'class',
+        'continue' : 'continue',
+        'def' : 'def',
+        'del' : 'del',
+        'elif' : 'elif',
+        'else' :'else',
+        'except':'except',
+        'false':'False',
+        'finally':'finally',
+        'for':'for',
+        'from':'from',
+        'global':'global',
+        'if':'if',
+        'import':'import',
+        'in':'in',
+        'is':'is',
+        'lambda':'lambda',
+        'none':'None',
+        'nonlocal':'nonlocal', # ! dual pass Word
+        'not':'not',
+        'or':'or',
+        'pass':'pass',
+        'raise':'raise',
+        'return':'return',
+        'true':'True',
+        'try':'try',
+        'while':'while',
+        'with':'with',
+        'yield':'yield',
+        'colon':':',
     }
 
+def Delete(keywords):
+    pass
+
+def Arguments(keywords):
+    pass
 # --------------------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -119,9 +157,11 @@ def GrammerChannel(listwords):
         'kabab': Kabab,
         'camel': Camel,
         'capital': Capital,
-        'say': Plaintext
+        'say': Plaintext,
+        'delete': Delete,
+        'args':Arguments,
     }
-    function = possibleCommands.get(SelectorVaraintHandler(listwords[0]), Plaintext)
+    function = possibleCommands.get(SelectorVaraintHandler(listwords[0]), ProgrammingKeywords)
     # function = possibleCommands.get(listwords[0],plaintext)
     return function(listwords)
 
@@ -131,6 +171,6 @@ def GrammerChannel(listwords):
 
 def SelectorVaraintHandler(input):
     variant = {
-        ['camel','kamel'] : "Camel",
+        ['camel','kamel'] : 'Camel',
     }
-    return input # ! change later to non-default function after code defenittion
+    return input # ! change later to non-default function after code defnittion
