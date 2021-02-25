@@ -105,78 +105,82 @@ def Plaintext(listwords):
 
 def ProgrammingKeywords():
     keywordList = {
-        'and' : 'and',
-        'as':'as',
-        'assert':'assert',
-        'break':'break',
-        'class' : 'class',
-        'continue' : 'continue',
-        'def' : 'def',
-        'del' : 'del',
-        'elif' : 'elif',
-        'else' :'else',
-        'except':'except',
-        'false':'False',
-        'finally':'finally',
-        'for':'for',
-        'from':'from',
-        'global':'global',
-        'if':'if',
-        'import':'import',
-        'in':'in',
-        'is':'is',
-        'lambda':'lambda',
-        'none':'None',
-        'nonlocal':'nonlocal', # ! dual pass Word
-        'not':'not',
-        'or':'or',
-        'pass':'pass',
-        'raise':'raise',
-        'return':'return',
-        'true':'True',
-        'try':'try',
-        'while':'while',
-        'with':'with',
-        'yield':'yield',
-        'colon':':',
+        'and': 'and',
+        'as': 'as',
+        'assert': 'assert',
+        'break': 'break',
+        'class': 'class',
+        'continue': 'continue',
+        'def': 'def',
+        'del': 'del',
+        'elif': 'elif',
+        'else': 'else',
+        'except': 'except',
+        'false': 'False',
+        'finally': 'finally',
+        'for': 'for',
+        'from': 'from',
+        'global': 'global',
+        'if': 'if',
+        'import': 'import',
+        'in': 'in',
+        'is': 'is',
+        'lambda': 'lambda',
+        'none': 'None',
+        'nonlocal': 'nonlocal',  # ! dual pass Word
+        'not': 'not',
+        'or': 'or',
+        'pass': 'pass',
+        'raise': 'raise',
+        'return': 'return',
+        'true': 'True',
+        'try': 'try',
+        'while': 'while',
+        'with': 'with',
+        'yield': 'yield',
+        'colon': ':',
     }
 
+
 def Delete(keywords):
-    pass
+    keywords.pop(0)
+
 
 def Arguments(keywords):
     return "()"
 
+
 def Move(keywords):
     keywords.pop(0)
     MoveSelectors = {
-        'up':Key.up,
-        'down':Key.down,
-        'left':Key.left,
-        'right':Key.right,
+        'up': Key.up,
+        'down': Key.down,
+        'left': Key.left,
+        'right': Key.right,
     }
     keylen = len(keywords)
-    if keylen==1:
+    if keylen == 1:
         moveSel = keywords[0]
-        tap(MoveSelectors.get(moveSel,None))
-    if keylen==2:
+        tap(MoveSelectors.get(moveSel, None))
+    if keylen == 2:
         moveSel = keywords[0]
         times = NumberDecode(keywords[1])
-        tap(MoveSelectors.get(moveSel,None),times)
+        tap(MoveSelectors.get(moveSel, None), times)
     return ''
+
 
 def NumberDecode(number):
     numberVariant = {
-        ['0'] : 0,
-        ['1'] : 1,
-        ['2'] : 2,
-        ['3'] : 3,
-        ['4'] : 4,
-        ['5'] : 5,
-        ['6'] : 6,
-        ['7'] : 7,
-        ['8'] : 8,
-        ['9'] : 9,
+        ['0']: 0,
+        ['1']: 1,
+        ['2']: 2,
+        ['3']: 3,
+        ['4']: 4,
+        ['5']: 5,
+        ['6']: 6,
+        ['7']: 7,
+        ['8']: 8,
+        ['9']: 9,
     }
     # TODO incomplete
     return number
@@ -193,10 +197,11 @@ def GrammerChannel(listwords):
         'capital': Capital,
         'say': Plaintext,
         'delete': Delete,
-        'args':Arguments,
-        'go':Move,
+        'args': Arguments,
+        'go': Move,
     }
-    function = possibleCommands.get(SelectorVaraintHandler(listwords[0]), ProgrammingKeywords)
+    function = possibleCommands.get(
+        SelectorVaraintHandler(listwords[0]), ProgrammingKeywords)
     # function = possibleCommands.get(listwords[0],plaintext)
     return function(listwords)
 
@@ -204,9 +209,10 @@ def GrammerChannel(listwords):
 # print(Kabab(['kabab','hello','world']))
 # print(Camel(['','hello','world','niggas']))
 
+
 def SelectorVaraintHandler(input):
     selectorVariant = {
-        ['camel','kamel'] : 'Camel',
-        ['args','arcs','ox','herbs','ags']:'args',
+        ['camel', 'kamel']: 'Camel',
+        ['args', 'arcs', 'ox', 'herbs', 'ags']: 'args',
     }
-    return input # ! change later to non-default function after code defnittion
+    return input  # ! change later to non-default function after code defnittion
