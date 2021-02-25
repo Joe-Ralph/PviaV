@@ -146,6 +146,40 @@ def Delete(keywords):
 
 def Arguments(keywords):
     return "()"
+
+def Move(keywords):
+    keywords.pop(0)
+    MoveSelectors = {
+        'up':Key.up,
+        'down':Key.down,
+        'left':Key.left,
+        'right':Key.right,
+    }
+    keylen = len(keywords)
+    if keylen==1:
+        moveSel = keywords[0]
+        tap(MoveSelectors.get(moveSel,None))
+    if keylen==2:
+        moveSel = keywords[0]
+        times = NumberDecode(keywords[1])
+        tap(MoveSelectors.get(moveSel,None),times)
+    return ''
+
+def NumberDecode(number):
+    numberVariant = {
+        ['0'] : 0,
+        ['1'] : 1,
+        ['2'] : 2,
+        ['3'] : 3,
+        ['4'] : 4,
+        ['5'] : 5,
+        ['6'] : 6,
+        ['7'] : 7,
+        ['8'] : 8,
+        ['9'] : 9,
+    }
+    # TODO incomplete
+    return number
 # --------------------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -160,6 +194,7 @@ def GrammerChannel(listwords):
         'say': Plaintext,
         'delete': Delete,
         'args':Arguments,
+        'go':Move,
     }
     function = possibleCommands.get(SelectorVaraintHandler(listwords[0]), ProgrammingKeywords)
     # function = possibleCommands.get(listwords[0],plaintext)
@@ -170,7 +205,7 @@ def GrammerChannel(listwords):
 # print(Camel(['','hello','world','niggas']))
 
 def SelectorVaraintHandler(input):
-    variant = {
+    selectorVariant = {
         ['camel','kamel'] : 'Camel',
     }
     return input # ! change later to non-default function after code defnittion
