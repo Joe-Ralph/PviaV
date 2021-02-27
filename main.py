@@ -17,7 +17,7 @@ try:
 except sr.UnknownValueError:
     print("""
 █▀█ █▀▀ ▀█▀ █▀█ █▄█
-█▀▄ ██▄ ░█░ █▀▄ ░█░                                                                
+█▀▄ ██▄ ░█░ █▀▄ ░█░                                                               
 """)
 except sr.RequestError as e:
     print("Could not request results; {0}".format(e))

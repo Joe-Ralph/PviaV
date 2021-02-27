@@ -103,7 +103,7 @@ def Plaintext(listwords):
     return ' '.join(listwords)
 
 
-def ProgrammingKeywords():
+def ProgrammingKeywords(keywords):
     keywordList = {
         'and': 'and',
         'as': 'as',
@@ -139,12 +139,20 @@ def ProgrammingKeywords():
         'with': 'with',
         'yield': 'yield',
         'colon': ':',
+        'comma':',',
+
     }
+    anslist = []
+    for i in keywords:
+        if i in keywordList.keys():
+            anslist.append(keywordList[i])
+    return " ".join(anslist)
 
 
 def Delete(keywords):
     keywords.pop(0)
-
+    times = NumberDecode(keywords[0])
+    tap(Key.backspace,times)
 
 def Arguments(keywords):
     return "()"
@@ -183,7 +191,14 @@ def NumberDecode(number):
         ['9']: 9,
     }
     # TODO incomplete
-    return number
+    return int(number)
+
+def Curly(keywords):
+    return '{}'
+
+def newLine(keywords):
+    tap(Key.enter)
+    return ''
 # --------------------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -199,6 +214,8 @@ def GrammerChannel(listwords):
         'delete': Delete,
         'args': Arguments,
         'go': Move,
+        'curly': Curly,
+        'enter' : newLine,
     }
     function = possibleCommands.get(
         SelectorVaraintHandler(listwords[0]), ProgrammingKeywords)
