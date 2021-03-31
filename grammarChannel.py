@@ -4,6 +4,22 @@ from pynput.keyboard import Key, Controller
 
 keyboard = Controller()
 
+class MultiKeyedDict():
+    
+    def __init__(self,dict) -> None:
+        self.keySet=set()
+        self.mainDict = {}
+        for key,val in dict.items():
+            for j in key:
+                self.mainDict[j] = val
+            self.keySet.add(key)
+    
+    def __getitem__(self,key):
+        return self.mainDict[key] if key in self.keySet else key
+
+    def get(self,key,elsepart):
+        return self.mainDict.get(key,elsepart)
+
 
 def keyDecode(key):
     wordDict = {
@@ -39,6 +55,7 @@ def keyDecode(key):
         'backspace': Key.backspace,
         'end': Key.end,
         'home': Key.home,
+        'tab' : Key.tab
     }
     if key in wordDict:
         return wordDict[key]
@@ -100,6 +117,7 @@ def Capital(keys):
 
 
 def Plaintext(listwords):
+    listwords.pop(0)
     return ' '.join(listwords)
 
 
@@ -155,17 +173,19 @@ def Delete(keywords):
     tap(Key.backspace,times)
 
 def Arguments(keywords):
-    return "()"
+    pyautogui.typewrite('()')
+    keyboard.press(Key.left)
+    return ''
 
 
 def Move(keywords):
     keywords.pop(0)
-    MoveSelectors = {
-        'up': Key.up,
-        'down': Key.down,
-        'left': Key.left,
-        'right': Key.right,
-    }
+    MoveSelectors = MultiKeyedDict({
+        ('up'): Key.up,
+        ('down'): Key.down,
+        ('left'): Key.left,
+        ('right'): Key.right,
+    })
     keylen = len(keywords)
     if keylen == 1:
         moveSel = keywords[0]
@@ -178,20 +198,20 @@ def Move(keywords):
 
 
 def NumberDecode(number):
-    numberVariant = {
-        ['0']: 0,
-        ['1']: 1,
-        ['2']: 2,
-        ['3']: 3,
-        ['4']: 4,
-        ['5']: 5,
-        ['6']: 6,
-        ['7']: 7,
-        ['8']: 8,
-        ['9']: 9,
-    }
+    numberVariant = MultiKeyedDict({
+        ('0'): 0,
+        ('1'): 1,
+        ('2'): 2,
+        ('3'): 3,
+        ('4'): 4,
+        ('5'): 5,
+        ('6'): 6,
+        ('7'): 7,
+        ('8'): 8,
+        ('9'): 9,
+    })
     # TODO incomplete
-    return int(number)
+    return numberVariant[number]
 
 def Curly(keywords):
     return '{}'
@@ -199,11 +219,18 @@ def Curly(keywords):
 def newLine(keywords):
     tap(Key.enter)
     return ''
+
+def Quotes(keywords):
+    pyautogui.typewrite('\'\'')
+    keyboard.press(Key.left)
+    return ''
+
+def Space(keywords):
+    return ' '
 # --------------------------------------------------------------------------------------------------------------------------------------------
 
 
 def GrammerChannel(listwords):
-    print(listwords)
     possibleCommands = {
         'press': KeyCombos,
         'select': Select,
@@ -216,20 +243,17 @@ def GrammerChannel(listwords):
         'go': Move,
         'curly': Curly,
         'enter' : newLine,
+        'quotes' : Quotes,
+        'space' : Space,
     }
     function = possibleCommands.get(
         SelectorVaraintHandler(listwords[0]), ProgrammingKeywords)
-    # function = possibleCommands.get(listwords[0],plaintext)
     return function(listwords)
 
-# Select(['select','line'])
-# print(Kabab(['kabab','hello','world']))
-# print(Camel(['','hello','world','niggas']))
 
-
-def SelectorVaraintHandler(input):
-    selectorVariant = {
-        ['camel', 'kamel']: 'Camel',
-        ['args', 'arcs', 'ox', 'herbs', 'ags']: 'args',
-    }
-    return input  # ! change later to non-default function after code defnittion
+def SelectorVaraintHandler(input:str):
+    selectorVariant = MultiKeyedDict( {
+        ('camel', 'kamel'): 'camel',
+        ('args', 'arcs', 'ox', 'herbs', 'ags'): 'args',
+    })
+    return selectorVariant[input]
