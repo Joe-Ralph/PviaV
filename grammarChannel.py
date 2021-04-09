@@ -201,13 +201,13 @@ def NumberDecode(number):
     numberVariant = MultiKeyedDict({
         ('0'): 0,
         ('1'): 1,
-        ('2'): 2,
-        ('3'): 3,
-        ('4'): 4,
+        ('2','tu'): 2,
+        ('3','tree'): 3,
+        ('4','aur'): 4,
         ('5'): 5,
-        ('6'): 6,
+        ('6','six'): 6,
         ('7'): 7,
-        ('8'): 8,
+        ('8','hate'): 8,
         ('9'): 9,
     })
     # TODO incomplete
@@ -253,7 +253,18 @@ def GrammerChannel(listwords):
 
 def SelectorVaraintHandler(input:str):
     selectorVariant = MultiKeyedDict( {
-        ('camel', 'kamel'): 'camel',
-        ('args', 'arcs', 'ox', 'herbs', 'ags'): 'args',
+        ('press','dress'):KeyCombos,
+        ('select'):Select,
+        ('kabab'):Kabab,
+        ('camel', 'kamel'):Camel,
+        ('capital'):Capital,
+        ('say','se'):Plaintext,
+        ('delete'):Delete,
+        ('args', 'arcs', 'ox', 'herbs', 'ags'):Arguments,
+        ('go'):Move,
+        ('Curly','kelly','karli','kali'):Curly,
+        ('enter','inter'):newLine,
+         ('quotes','court'):Quotes,
+        ('space','spe'):Space,
     })
     return selectorVariant[input]
